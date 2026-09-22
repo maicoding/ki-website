@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Künstliche Intelligenz – Schulprojekt</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    * {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px;
+    }
+
+    body {
+        background-color: #f8fafc;
+        color: #1e293b;
+    }
+
+    .gradient-hero {
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 55%, #1d4ed8 100%);
+    }
+
+    .gradient-text {
+        background: linear-gradient(90deg, #60a5fa, #a5b4fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 1rem;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px -10px rgba(15, 23, 42, 0.15);
+    }
+
+    .section-badge {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #1d4ed8;
+        background: #dbeafe;
+        padding: 0.35rem 0.9rem;
+        border-radius: 9999px;
+        margin-bottom: 0.75rem;
+    }
+
+    .fade-in {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .nav-link {
+        position: relative;
+        transition: color 0.2s ease;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #3b82f6;
+        transition: width 0.25s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+        width: 100%;
+    }
+
+    .nav-link.active {
+        color: #1d4ed8;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    tbody tr {
+        transition: background-color 0.15s ease;
+    }
+
+    tbody tr:hover {
+        background-color: #eff6ff;
+    }
+
+    .icon-circle {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        flex-shrink: 0;
+    }
+
+    #mobileMenu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease;
+    }
+
+    #mobileMenu.open {
+        max-height: 400px;
+    }
+
+    .stat-number {
+        font-variant-numeric: tabular-nums;
+    }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <nav class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+        <a href="#start" class="flex items-center gap-2 font-bold text-slate-900">
+            <span class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center text-sm font-extrabold">KI</span>
+            <span class="hidden sm:inline">Schulprojekt: Künstliche Intelligenz</span>
+            <span class="sm:hidden">KI-Projekt</span>
+        </a>
+        <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+            <a href="#start" class="nav-link">Start</a>
+            <a href="#chancen" class="nav-link">Chancen</a>
+            <a href="#risiken" class="nav-link">Risiken</a>
+            <a href="#alltag" class="nav-link">Alltag</a>
+            <a href="#bildung" class="nav-link">Bildung</a>
+            <a href="#arbeitswelt" class="nav-link">Arbeitswelt</a>
+            <a href="#beispiele" class="nav-link">Beispiele</a>
+        </div>
+        <button id="menuBtn" class="md:hidden p-2 rounded-lg hover:bg-slate-100" aria-label="Menü öffnen">
+            <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+    </nav>
+    <div id="mobileMenu" class="md:hidden bg-white border-t border-slate-100">
+        <div class="flex flex-col px-6 py-3 gap-3 text-slate-700 font-medium">
+            <a href="#start" class="py-1">Start</a>
+            <a href="#chancen" class="py-1">Chancen</a>
+            <a href="#risiken" class="py-1">Risiken</a>
+            <a href="#alltag" class="py-1">Alltag</a>
+            <a href="#bildung" class="py-1">Bildung</a>
+            <a href="#arbeitswelt" class="py-1">Arbeitswelt</a>
+            <a href="#beispiele" class="py-1">Beispiele</a>
+        </div>
+    </div>
+</header>
+
+<!-- ===== STARTSEITE / HERO ===== -->
+<section id="start" class="gradient-hero text-white pt-32 pb-24 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="max-w-3xl fade-in visible">
+            <p class="text-blue-300 font-semibold tracking-widest uppercase text-sm mb-4">Schulprojekt · Informatik &amp; Gesellschaft</p>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+                Künstliche Intelligenz –<br>
+                <span class="gradient-text">eine sachliche Betrachtung</span>
+            </h1>
+            <p class="text-slate-300 text-lg leading-relaxed mb-8">
+                Diese Projektseite gibt einen neutralen Überblick über Künstliche Intelligenz (KI):
+                Was sie leisten kann, welche Risiken diskutiert werden und wie sie Alltag,
+                Bildung und Arbeitswelt bereits heute beeinflusst. Ziel ist eine ausgewogene
+                Darstellung ohne Wertung – als Grundlage für eine eigene Meinungsbildung.
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="#chancen" class="bg-blue-500 hover:bg-blue-400 transition-colors text-white font-semibold px-6 py-3 rounded-xl shadow-lg shadow-blue-900/40">Zu den Inhalten</a>
+                <a href="#beispiele" class="border border-slate-400/50 hover:bg-white/10 transition-colors text-white font-semibold px-6 py-3 rounded-xl">Beispieltabelle ansehen</a>
+            </div>
+        </div>
+
+        <!-- Kennzahlen -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
+            <div class="bg-white/10 backdrop-blur rounded-xl p-5 text-center border border-white/10">
+                <div class="stat-number text-3xl font-extrabold text-blue-300" data-count="1956">0</div>
+                <p class="text-slate-300 text-sm mt-1">Begriff „KI“ geprägt (Dartmouth-Konferenz)</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur rounded-xl p-5 text-center border border-white/10">
+                <div class="stat-number text-3xl font-extrabold text-blue-300"><span data-count="6"></span>&nbsp;Bereiche</div>
+                <p class="text-slate-300 text-sm mt-1">werden auf dieser Seite betrachtet</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur rounded-xl p-5 text-center border border-white/10">
+                <div class="stat-number text-3xl font-extrabold text-blue-300"><span data-count="12"></span>&nbsp;Beispiele</div>
+                <p class="text-slate-300 text-sm mt-1">konkreter KI-Anwendungen in der Tabelle</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur rounded-xl p-5 text-center border border-white/10">
+                <div class="stat-number text-3xl font-extrabold text-blue-300">2&nbsp;Seiten</div>
+                <p class="text-slate-300 text-sm mt-1">Chancen und Risiken – gleichberechtigt dargestellt</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== EINLEITUNG ===== -->
+<section class="max-w-6xl mx-auto px-4 sm:px-6 py-16">
+    <div class="card p-8 fade-in">
+        <h2 class="text-2xl font-bold mb-4">Was ist Künstliche Intelligenz?</h2>
+        <p class="text-slate-600 leading-relaxed mb-4">
+            Als Künstliche Intelligenz werden Computersysteme bezeichnet, die Aufgaben lösen,
+            für die üblicherweise menschliche Fähigkeiten wie Lernen, Sprachverstehen oder
+            Problemlösen erforderlich sind. Moderne KI-Systeme basieren häufig auf
+            <strong>maschinellem Lernen</strong>: Sie erkennen Muster in großen Datenmengen und
+            leiten daraus Vorhersagen oder Entscheidungen ab.
+        </p>
+        <p class="text-slate-600 leading-relaxed">
+            Wichtig für die Einordnung: Heutige KI ist <em>schwache KI</em> – sie ist auf
+            bestimmte Aufgaben spezialisiert und besitzt kein eigenes Bewusstsein. Die folgenden
+            Abschnitte stellen Chancen und Risiken nebeneinander, damit beide Perspektiven
+            gleichwertig sichtbar werden.
+        </p>
+    </div>
+</section>
+
+<!-- ===== CHANCEN ===== -->
+<section id="chancen" class="max-w-6xl mx-auto px-4 sm:px-6 py-14">
+    <div class="fade-in">
+        <span class="section-badge">Abschnitt 1</span>
+        <h2 class="text-3xl font-extrabold mb-3">Chancen</h2>
+        <p class="text-slate-600 max-w-3xl mb-10">
+            KI-Systeme können Prozesse beschleunigen, Menschen unterstützen und neue Möglichkeiten
+            eröffnen. Die folgenden Punkte werden in Wissenschaft und Öffentlichkeit häufig als
+            Vorteile genannt.
+        </p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card p-6 fade-in">
+            <div class="icon-circle bg-emerald-100 mb-4">🏥</div>
+            <h3 class="font-bold text-lg mb-2">Medizin und Forschung</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">KI kann Röntgen- und MRT-Bilder auswerten und Ärztinnen und Ärzte bei Diagnosen unterstützen. In der Forschung hilft sie z.&nbsp;B. bei der Vorhersage von Proteinstrukturen.</p>
+        </div>
+        <div class="card p-6 fade-in">
+            <div class="icon-circle bg-emerald-100 mb-4">⚙️</div>
+            <h3 class="font-bold text-lg mb-2">Effizienz und Entlastung</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">Wiederkehrende Aufgaben wie Datenauswertung oder Texterstellung können teilweise automatisiert werden. Das kann Zeit für anspruchsvollere Tätigkeiten freisetzen.</p>
+        </div>
+        <div class="card p-6 fade-in">
+            <div class="icon-circle bg-emerald-100 mb-4">♿</div>
+            <h3 class="font-bold text-lg mb-2">Barrierefreiheit</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">Sprach-zu-Text, automatische Untertitel und Bildbeschreibungen erleichtern Menschen mit Einschränkungen den Zugang zu Information und Kommunikation.</p>
+        </div>
+        <div class="card p-6 fade-in">
+            <div class="icon-circle bg-emerald-100 mb-4">🌍</div>
+            <h3 class="font-bold text-lg mb-2">Sprachen und Verständigung</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">Maschinelle Übersetzung ermöglicht Kommunikation über Sprachgrenzen hinweg – in Echtzeit und in vielen Sprachen.</p>
+        </div>
+        <div class="card p-6 fade-in">
+            <div class="icon-circle bg-emerald-100 mb-4">🌱</div>
+            <h3 class="font-bold text-lg mb-2">Umwelt und Klima</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">KI wird eingesetzt, um Energienetze zu optimieren, Wettermodelle zu verbessern und Ressourcen in Landwirtschaft und Industrie gezielter zu nutzen.</p>
+        </div>
+        <div class="card p-6 fade-in">
+            <div class="icon-circle bg-emerald-100 mb-4">🎓</div>
+            <h3 class="font-bold text-lg mb-2">Individuelle Förderung</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">Lernprogramme können sich an das Tempo und den Wissensstand einzelner Lernender anpassen und gezielt Übungen vorschlagen.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== RISIKEN ===== -->
+<section id="risiken" class="bg-slate-100 py-14">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="fade-in">
+            <span class="section-badge">Abschnitt 2</span>
+            <h2 class="text-3xl font-extrabold mb-3">Risiken</h2>
+            <p class="text-slate-600 max-w-3xl mb-10">
+                Neben den Chancen werden auch Risiken und offene Fragen diskutiert. Diese betreffen
+                sowohl technische als auch gesellschaftliche Aspekte.
+            </p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="card p-6 fade-in">
+                <div class="icon-circle bg-rose-100 mb-4">📰</div>
+                <h3 class="font-bold text-lg mb-2">Desinformation</h3>
+                <p class="text-slate-600 text-sm leading-relaxed">KI kann täuschend echte Bilder, Videos („Deepfakes“) und Texte erzeugen. Das erschwert die Unterscheidung zwischen echten und gefälschten Inhalten.</p>
+            </div>
+            <div class="card p-6 fade-in">
+                <div class="icon-circle bg-rose-100 mb-4">⚖️</div>
+                <h3 class="font-bold text-lg mb-2">Verzerrungen (Bias)</h3>
+                <p class="text-slate-600 text-sm leading-relaxed">KI lernt aus vorhandenen Daten. Enthalten diese Vorurteile oder Lücken, können Ergebnisse einzelne Gruppen benachteiligen, etwa bei Bewerbungsverfahren.</p>
+            </div>
+            <div class="card p-6 fade-in">
+                <div class="icon-circle bg-rose-100 mb-4">🔒</div>
+                <h3 class="font-bold text-lg mb-2">Datenschutz</h3>
+                <p class="text-slate-600 text-sm leading-relaxed">Viele KI-Systeme benötigen große Datenmengen. Dabei stellt sich die Frage, welche persönlichen Daten gesammelt, gespeichert und weiterverwendet werden.</p>
+            </div>
+            <div class="card p-6 fade-in">
+                <div class="icon-circle bg-rose-100 mb-4">❓</div>
+                <h3 class="font-bold text-lg mb-2">Fehler und Intransparenz</h3>
+                <p class="text-slate-600 text-sm leading-relaxed">KI-Ausgaben können falsch sein („Halluzinationen“). Zudem ist bei komplexen Modellen oft nicht nachvollziehbar, wie ein Ergebnis zustande kommt.</p>
+            </div>
+            <div class="card p-6 fade-in">
+                <div class="icon-circle bg-rose-100 mb-4">💼</div>
+                <h3 class="font-bold text-lg mb-2">Veränderung von Berufen</h3>
+                <p class="text-slate-600 text-sm leading-relaxed">Einige Tätigkeiten könnten wegfallen oder sich stark verändern. Wie viele neue Arbeitsplätze entstehen, ist unter Fachleuten umstritten.</p>
+            </div>
+            <div class="card p-6 fade-in">
+                <div class="icon-circle bg-rose-100 mb-4">⚡</div>
+                <h3 class="font-bold text-lg mb-2">Ressourcenverbrauch</h3>
+                <p class="text-slate-600 text-sm leading-relaxed">Das Training und der Betrieb großer KI-Modelle erfordern viel Rechenleistung, Strom und Wasser zur Kühlung von Rechenzentren.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ALLTAG ===== -->
+<section id="alltag" class="max-w-6xl mx-auto px-4 sm:px-6 py-14">
+    <div class="grid lg:grid-cols-2 gap-10 items-start">
+        <div class="fade-in">
+            <span class="section-badge">Abschnitt 3</span>
+            <h2 class="text-3xl font-extrabold mb-4">KI im Alltag</h2>
+            <p class="text-slate-600 leading-relaxed mb-4">
+                Viele Menschen nutzen KI täglich, oft ohne es bewusst wahrzunehmen. KI-Verfahren
+                stecken in Smartphones, Streaming-Diensten, Navigationssystemen und sozialen Medien.
+            </p>
+            <p class="text-slate-600 leading-relaxed">
+                Die Beispiele rechts zeigen typische Berührungspunkte. Sie verdeutlichen, dass KI
+                weniger eine Zukunftstechnologie als ein bereits alltäglicher Bestandteil digitaler
+                Dienste ist.
+            </p>
+        </div>
+        <div class="space-y-4">
+            <div class="card p-5 flex gap-4 fade-in">
+                <div class="icon-circle bg-blue-100">🗣️</div>
+                <div>
+                    <h3 class="font-semibold">Sprachassistenten</h3>
+                    <p class="text-slate-600 text-sm">Systeme wie Siri, Alexa oder der Google Assistant verstehen gesprochene Sprache und beantworten Fragen oder steuern Geräte.</p>
+                </div>
+            </div>
+            <div class="card p-5 flex gap-4 fade-in">
+                <div class="icon-circle bg-blue-100">🎬</div>
+                <div>
+                    <h3 class="font-semibold">Empfehlungssysteme</h3>
+                    <p class="text-slate-600 text-sm">Streaming- und Shopping-Plattformen schlagen Inhalte auf Basis des bisherigen Nutzungsverhaltens vor.</p>
+                </div>
+            </div>
+            <div class="card p-5 flex gap-4 fade-in">
+                <div class="icon-circle bg-blue-100">🗺️</div>
+                <div>
+                    <h3 class="font-semibold">Navigation</h3>
+                    <p class="text-slate-600 text-sm">Karten-Apps berechnen Routen und Ankunftszeiten anhand aktueller Verkehrsdaten und gelernter Muster.</p>
+                </div>
+            </div>
+            <div class="card p-5 flex gap-4 fade-in">
+                <div class="icon-circle bg-blue-100">📷</div>
+                <div>
+                    <h3 class="font-semibold">Smartphone-Kamera</h3>
+                    <p class="text-slate-600 text-sm">Gesichtserkennung zum Entsperren, automatische Bildverbesserung und Objekterkennung nutzen KI-Verfahren.</p>
+                </div>
+            </div>
+            <div class="card p-5 flex gap-4 fade-in">
+                <div class="icon-circle bg-blue-100">✉️</div>
+                <div>
+                    <h3 class="font-semibold">Spam-Filter</h3>
+                    <p class="text-slate-600 text-sm">E-Mail-Dienste sortieren unerwünschte Nachrichten automatisch aus, indem sie Merkmale bekannter Spam-Mails erkennen.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== BILDUNG ===== -->
+<section id="bildung" class="bg-slate-100 py-14">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="fade-in">
+            <span class="section-badge">Abschnitt 4</span>
+            <h2 class="text-3xl font-extrabold mb-3">KI in der Bildung</h2>
+            <p class="text-slate-600 max-w-3xl mb-10">
+                In Schulen und Hochschulen wird derzeit intensiv diskutiert, wie mit KI-Werkzeugen
+                umgegangen werden soll. Es gibt sowohl Anwendungsmöglichkeiten als auch offene Fragen.
+            </p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="card p-7 fade-in border-t-4 border-t-emerald-400">
+                <h3 class="font-bold text-lg mb-4 flex items-center gap-2"><span>✅</span> Mögliche Einsatzfelder</h3>
+                <ul class="space-y-3 text-slate-600 text-sm">
+                    <li class="flex gap-2"><span class="text-emerald-500 font-bold">•</span> Adaptive Lernplattformen, die Übungen an den Lernstand anpassen</li>
+                    <li class="flex gap-2"><span class="text-emerald-500 font-bold">•</span> Unterstützung beim Erklären komplexer Themen in einfacher Sprache</li>
+                    <li class="flex gap-2"><span class="text-emerald-500 font-bold">•</span> Hilfen für Lehrkräfte bei der Erstellung von Materialien und Übungsaufgaben</li>
+                    <li class="flex gap-2"><span class="text-emerald-500 font-bold">•</span> Sprachlern-Apps mit Aussprache-Feedback</li>
+                    <li class="flex gap-2"><span class="text-emerald-500 font-bold">•</span> Automatische Untertitel und Übersetzungen für inklusiven Unterricht</li>
+                </ul>
+            </div>
+            <div class="card p-7 fade-in border-t-4 border-t-amber-400">
+                <h3 class="font-bold text-lg mb-4 flex items-center gap-2"><span>⚠️</span> Offene Fragen und Herausforderungen</h3>
+                <ul class="space-y-3 text-slate-600 text-sm">
+                    <li class="flex gap-2"><span class="text-amber-500 font-bold">•</span> Wie lassen sich eigene Leistung und KI-Nutzung bei Hausaufgaben unterscheiden?</li>
+                    <li class="flex gap-2"><span class="text-amber-500 font-bold">•</span> Wie wird kritischer Umgang mit möglicherweise fehlerhaften KI-Antworten vermittelt?</li>
+                    <li class="flex gap-2"><span class="text-amber-500 font-bold">•</span> Welche Regeln gelten für Prüfungen und Bewertungen?</li>
+                    <li class="flex gap-2"><span class="text-amber-500 font-bold">•</span> Wie wird der Datenschutz von Schülerinnen und Schülern gewährleistet?</li>
+                    <li class="flex gap-2"><span class="text-amber-500 font-bold">•</span> Haben alle Lernenden gleichen Zugang zu den Werkzeugen?</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card p-6 mt-6 fade-in bg-blue-50 border-blue-200">
+            <p class="text-slate-700 text-sm leading-relaxed">
+                <strong>Einordnung:</strong> Viele Bildungseinrichtungen entwickeln derzeit Leitlinien
+                für den Umgang mit KI. Häufig wird ein Mittelweg empfohlen: KI-Werkzeuge kennenlernen
+                und reflektiert nutzen, statt sie pauschal zu verbieten oder unkritisch einzusetzen.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ARBEITSWELT ===== -->
+<section id="arbeitswelt" class="max-w-6xl mx-auto px-4 sm:px-6 py-14">
+    <div class="fade-in">
+        <span class="section-badge">Abschnitt 5</span>
+        <h2 class="text-3xl font-extrabold mb-3">KI in der Arbeitswelt</h2>
+        <p class="text-slate-600 max-w-3xl mb-10">
+            KI verändert Berufsbilder und Arbeitsabläufe. Studien kommen zu unterschiedlichen
+            Ergebnissen, wie stark einzelne Branchen betroffen sein werden. Sicher ist: Der Umgang
+            mit KI-Werkzeugen wird in vielen Berufen zu einer gefragten Kompetenz.
+        </p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+        <div class="card p-6 fade-in">
+            <div class="icon-circle bg-indigo-100 mb-4">🔄</div>
+            <h3 class="font-bold text-lg mb-2">Veränderte Tätigkeiten</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">
+                Routineaufgaben – etwa das Sortieren von Dokumenten, einfache Textentwürfe oder
+                Datenanalysen – können zunehmend von KI übernommen werden. Menschen konzentrieren
+                sich stärker auf Prüfung, Entscheidung und Kommunikation.
+            </p>
+        </div>
+        <div class="card p-6 fade-in">
+            <div class="icon-circle bg-indigo-100 mb-4">🆕</div>
+            <h3 class="font-bold text-lg mb-2">Neue Berufsfelder</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">
+                Es entstehen neue Tätigkeiten, z.&nbsp;B. in der Entwicklung und Wartung von
+                KI-Systemen, im Prompt-Design, in der Datenaufbereitung oder in der Prüfung von
+                KI-Ergebnissen (KI-Qualitätssicherung, KI-Ethik).
+            </p>
+        </div>
+        <div class="card p-6 fade-in">
+            <div class="icon-circle bg-indigo-100 mb-4">📜</div>
+            <h3 class="font-bold text-lg mb-2">Regeln und Mitbestimmung</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">
+                Gesetzgeber arbeiten an Regelungen, etwa die KI-Verordnung der EU (AI Act). Sie
+                stuft KI-Anwendungen nach Risiko ein und legt Pflichten für Anbieter und Nutzer fest.
+            </p>
+        </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 mt-6">
+        <div class="card p-6 fade-in">
+            <h3 class="font-bold mb-3">Branchen mit starker KI-Nutzung (Auswahl)</h3>
+            <div class="space-y-3">
+                <div>
+                    <div class="flex justify-between text-sm mb-1"><span>IT und Software</span><span class="text-slate-500">sehr hoch</span></div>
+                    <div class="h-2 bg-slate-200 rounded-full overflow-hidden"><div class="h-full bg-blue-600 rounded-full progress" data-width="90%"></div></div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-sm mb-1"><span>Finanzen und Versicherungen</span><span class="text-slate-500">hoch</span></div>
+                    <div class="h-2 bg-slate-200 rounded-full overflow-hidden"><div class="h-full bg-blue-500 rounded-full progress" data-width="75%"></div></div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-sm mb-1"><span>Medien und Marketing</span><span class="text-slate-500">hoch</span></div>
+                    <div class="h-2 bg-slate-200 rounded-full overflow-hidden"><div class="h-full bg-blue-500 rounded-full progress" data-width="70%"></div></div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-sm mb-1"><span>Industrie und Produktion</span><span class="text-slate-500">mittel bis hoch</span></div>
+                    <div class="h-2 bg-slate-200 rounded-full overflow-hidden"><div class="h-full bg-blue-400 rounded-full progress" data-width="60%"></div></div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-sm mb-1"><span>Handwerk und Pflege</span><span class="text-slate-500">bisher geringer</span></div>
+                    <div class="h-2 bg-slate-200 rounded-full overflow-hidden"><div class="h-full bg-blue-300 rounded-full progress" data-width="30%"></div></div>
+                </div>
+            </div>
+            <p class="text-xs text-slate-400 mt-4">Vereinfachte, qualitative Darstellung zur Veranschaulichung – keine exakten Messwerte.</p>
+        </div>
+        <div class="card p-6 fade-in">
+            <h3 class="font-bold mb-3">Gefragte Kompetenzen im Umgang mit KI</h3>
+            <ul class="space-y-3 text-slate-600 text-sm">
+                <li class="flex gap-3"><span class="text-blue-600 font-bold">1.</span><span><strong>Grundverständnis:</strong> Wissen, wie KI-Systeme prinzipiell funktionieren und wo ihre Grenzen liegen.</span></li>
+                <li class="flex gap-3"><span class="text-blue-600 font-bold">2.</span><span><strong>Kritisches Prüfen:</strong> KI-Ergebnisse hinterfragen, Quellen vergleichen und Fehler erkennen.</span></li>
+                <li class="flex gap-3"><span class="text-blue-600 font-bold">3.</span><span><strong>Klare Aufgabenstellung:</strong> Präzise Anfragen formulieren, um brauchbare Ergebnisse zu erhalten.</span></li>
+                <li class="flex gap-3"><span class="text-blue-600 font-bold">4.</span><span><strong>Datenschutzbewusstsein:</strong> Wissen, welche Daten eingegeben werden dürfen und welche nicht.</span></li>
+                <li class="flex gap-3"><span class="text-blue-600 font-bold">5.</span><span><strong>Menschliche Stärken:</strong> Kreativität, Empathie und Urteilsvermögen bleiben zentral.</span></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ===== TABELLE MIT BEISPIELEN ===== -->
+<section id="beispiele" class="bg-slate-900 text-white py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="fade-in">
+            <span class="section-badge">Abschnitt 6</span>
+            <h2 class="text-3xl font-extrabold mb-3">Beispiele für KI-Anwendungen</h2>
+            <p class="text-slate-300 max-w-3xl mb-6">
+                Die folgende Tabelle ordnet konkrete Beispiele den Bereichen dieser Projektseite zu.
+                Über das Suchfeld und die Filter lässt sich die Tabelle eingrenzen.
+            </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 mb-6 fade-in">
+            <input id="tableSearch" type="text" placeholder="Tabelle durchsuchen …"
+                   class="flex-1 px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select id="tableFilter" class="px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">Alle Bereiche</option>
+                <option value="Alltag">Alltag</option>
+                <option value="Bildung">Bildung</option>
+                <option value="Arbeitswelt">Arbeitswelt</option>
+                <option value="Medizin">Medizin</option>
+                <option value="Medien">Medien</option>
+            </select>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-700 fade-in">
+            <table class="w-full text-sm min-w-[720px]">
+                <thead>
+                    <tr class="bg-slate-800 text-left text-slate-300 uppercase text-xs tracking-wider">
+                        <th class="px-5 py-4">Anwendung</th>
+                        <th class="px-5 py-4">Bereich</th>
+                        <th class="px-5 py-4">Beschreibung</th>
+                        <th class="px-5 py-4">Chance</th>
+                        <th class="px-5 py-4">Risiko / offene Frage</th>
+                    </tr>
+                </thead>
+                <tbody id="exampleTable" class="divide-y divide-slate-800 text-slate-200">
+                    <tr data-cat="Alltag">
+                        <td class="px-5 py-4 font-semibold">Sprachassistent</td>
+                        <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-300">Alltag</span></td>
+                        <td class="px-5 py-4 text-slate-400">Erkennt gesprochene Sprache und führt Befehle aus</td>
+                        <td class="px-5 py-4 text-slate-400">Bequeme, freihändige Bedienung</td>
+                        <td class="px-5 py-4 text-slate-400">Umgang mit Sprachaufzeichnungen</td>
+                    </tr>
+                    <tr data-cat="Alltag">
+                        <td class="px-5 py-4 font-semibold">Empfehlungsalgorithmus</td>
+                        <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-300">Alltag</span></td>
+                        <td class="px-5 py-4 text-slate-400">Schlägt Filme, Musik oder Produkte vor</td>
+                        <td class="px-5 py-4 text-slate-400">Passende Inhalte schneller finden</td>
+                        <td class="px-5 py-4 text-slate-400">Einseitige Auswahl („Filterblase“)</td>
+                    </tr>
+                    <tr data-cat="Alltag">
+                        <td class="px-5 py-4 font-semibold">Navigations-App</td>
+                        <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-300">Alltag</span></td>
+                        <td class="px-5 py-4 text-slate-400">Berechnet Routen anhand von Verkehrsdaten</td>
+                        <td class="px-5 py-4 text-slate-400">Zeitersparnis, Stauvermeidung</td>
+                        <td class="px-5 py-4 text-slate-400">Erfassung von Bewegungsdaten</td>
+                    </tr>
+                    <tr data-cat="Alltag">
+                        <td class="px-5 py-4 font-semibold">Spam-Filter</td>
+                        <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-300">Alltag</span></td>
+                        <td class="px-5 py-4 text-slate-400">Sortiert unerwünschte E-Mails automatisch aus</td>
+                        <td class="px-5 py-4 text-slate-400">Schutz vor Betrug und Werbung</td>
+                        <td class="px-5 py-4 text-slate-400">Fälschliches Aussortieren wichtiger Mails</td>
+                    </tr>
+                    <tr data-cat="Bildung">
+                        <td class="px-5 py-4 font-semibold">Adaptive Lernplattform</td>
+                        <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-300">Bildung</span></td>
+                        <td class="px-5 py-4 text-slate-400">Passt Aufgaben an den Lernstand an</td>
+                        <td class="px-5 py-4 text-slate-400">Individuelles Lerntempo</td>
+                        <td class="px-5 py-4 text-slate-400">Datenschutz bei Lerndaten</td>
+                    </tr>
+                    <tr data-cat="Bildung">
+                        <td class="px-5 py-4 font-semibold">Text-Chatbot (z. B. für Erklärungen)</td>
+                        <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-300">Bildung</span></td>
+                        <td class="px-5 py-4 text-slate-400">Beantwortet Fragen und erklärt Themen</td>
+                        <td class="px-5 py-4 text-slate-400">Rund um die Uhr verfügbare Hilfe</td>
+                        <td class="px-5 py-4 text-slate-400">Fehlerhafte Antworten, Eigenleistung</td>
+                    </tr>
+                    <tr data-cat="Bildung">
+                        <td class="px-5 py-4 font-semibold">Sprachlern-App</td>
+                        <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-300">Bildung</span></td>
+                        <td class="px-5 py-4 text-slate-400">Gibt Feedback zu Aussprache und Vokabeln</td>
+                        <td class="px-5 py-4 text-slate-400">Motivierendes, direktes Feedback</td>
+                        <td class="px-5 py-4 text-slate-400">Ersetzt kein echtes Gespräch</td>
+                    </tr>
+                    <tr data-cat="Arbeitswelt">
+                        <td class="px-5 py-4 font-semibold">Automatische Texterstellung</td>
+                        <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-500/20 text-indigo-300">Arbeitswelt</span></td>
+                        <td class="px-5 py-4 text-slate-400">Erstellt Entwürfe für E-Mails und Berichte</td>
+                        <td class="px-5 py-4 text-slate-400">Zeitersparnis bei Routinetexten</td>
+                        <td class="px-5 py-4 text-slate-400">Prüfpflicht, Urheberrechtsfragen</td>
+                    </tr>
+                    <tr data-cat="Arbeitswelt">
+                        <td class="px-5 py-4 font-semibold">Qualitätskontrolle in der Produktion</td>
+                        <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-500/20 text-indigo-300">Arbeitswelt</span></td>
+                        <td class="px-5 py-4 text-slate-400">Erkennt fehlerhafte Teile per Bilderkennung</td>
+                        <td class="px-5 py-4 text-slate-400">Weniger Ausschuss, hohe Genauigkeit</td>
+                        <td class="px-5 py-4 text-slate-400">Veränderung von Arbeitsplätzen</td>
+                    </tr>
+                    <tr data-cat="Arbeitswelt">
+                        <td class="px-5 py-4 font-semibold">Bewerbungs-Vorauswahl</td>
+                        <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-500/20 text-indigo-300">Arbeitswelt</span></td>
+                        <td class="px-5 py-4 text-slate-400">Sortiert Bewerbungen nach Kriterien vor</td>
+                        <td class="px-5 py-4 text-slate-400">Schnellere Bearbeitung vieler Bewerbungen</td>
+                        <td class="px-5 py-4 text-slate-400">Mögliche Benachteiligung durch Bias</td>
+                    </tr>
+                    <tr data-cat="Medizin">
+                        <td class="px-5 py-4 font-semibold">Bildauswertung in der Radiologie</td>
+                        <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs font-medium bg-rose-500/20 text-rose-300">Medizin</span></td>
+                        <td class="px-5 py-4 text-slate-400">Unterstützt beim Erkennen von Auffälligkeiten</td>
+                        <td class="px-5 py-4 text-slate-400">Frühere Erkennung von Krankheiten</td>
+                        <td class="px-5 py-4 text-slate-400">Verantwortung bei Fehldiagnosen</td>
+                    </tr>
+                    <tr data-cat="Medien">
+                        <td class="px-5 py-4 font-semibold">Bild- und Videogenerierung</td>
+                        <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/20 text-amber-300">Medien</span></td>
+                        <td class="px-5 py-4 text-slate-400">Erzeugt Bilder und Videos aus Textbeschreibungen</td>
+                        <td class="px-5 py-4 text-slate-400">Neue kreative Möglichkeiten</td>
+                        <td class="px-5 py-4 text-slate-400">Deepfakes, Desinformation</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p id="noResults" class="hidden text-center text-slate-400 py-6">Keine passenden Einträge gefunden.</p>
+        <p class="text-xs text-slate-500 mt-4">Hinweis: Die Tabelle nennt exemplarische Anwendungen und erhebt keinen Anspruch auf Vollständigkeit.</p>
+    </div>
+</section>
+
+<!-- ===== FAZIT ===== -->
+<section class="max-w-6xl mx-auto px-4 sm:px-6 py-16">
+    <div class="card p-8 fade-in border-l-4 border-l-blue-600">
+        <h2 class="text-2xl font-bold mb-4">Zusammenfassung</h2>
+        <p class="text-slate-600 leading-relaxed mb-4">
+            Künstliche Intelligenz ist bereits fester Bestandteil vieler Lebensbereiche. Sie bietet
+            Chancen wie Effizienzgewinne, medizinischen Fortschritt und individuelle Förderung –
+            gleichzeitig bestehen Risiken wie Desinformation, Verzerrungen und offene Fragen zu
+            Datenschutz und Verantwortung.
+        </p>
+        <p class="text-slate-600 leading-relaxed">
+            Eine sachliche Auseinandersetzung erfordert, beide Seiten zu kennen. Wie stark Chancen
+            oder Risiken überwiegen, hängt vom konkreten Einsatz, von Regeln und vom kompetenten
+            Umgang der Nutzerinnen und Nutzer ab. Diese Bewertung bleibt jeder und jedem selbst
+            überlassen – die vorliegende Seite liefert dafür die Grundlage.
+        </p>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="bg-slate-900 text-slate-400 py-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-3 gap-8 text-sm">
+        <div>
+            <h3 class="text-white font-bold mb-3">Über dieses Projekt</h3>
+            <p class="leading-relaxed">Schulprojekt im Fach Informatik / Gesellschaftskunde. Ziel ist eine neutrale, ausgewogene Darstellung des Themas Künstliche Intelligenz.</p>
+        </div>
+        <div>
+            <h3 class="text-white font-bold mb-3">Inhaltsverzeichnis</h3>
+            <ul class="space-y-1.5">
+                <li><a href="#chancen" class="hover:text-white transition-colors">Chancen</a></li>
+                <li><a href="#risiken" class="hover:text-white transition-colors">Risiken</a></li>
+                <li><a href="#alltag" class="hover:text-white transition-colors">Alltag</a></li>
+                <li><a href="#bildung" class="hover:text-white transition-colors">Bildung</a></li>
+                <li><a href="#arbeitswelt" class="hover:text-white transition-colors">Arbeitswelt</a></li>
+                <li><a href="#beispiele" class="hover:text-white transition-colors">Beispieltabelle</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3 class="text-white font-bold mb-3">Hinweis zu Quellen</h3>
+            <p class="leading-relaxed">Die Inhalte fassen allgemein zugängliches Wissen zusammen. Für eine Abgabe sollten konkrete Quellen (z.&nbsp;B. Fachartikel, offizielle Publikationen) ergänzt und zitiert werden.</p>
+        </div>
+    </div>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 mt-8 pt-6 border-t border-slate-800 text-xs text-center text-slate-500">
+        Schulprojekt „Künstliche Intelligenz“ · Erstellt zu Übungszwecken · Ohne kommerzielle Absicht
+    </div>
+</footer>
+
+<script>
+    // Mobile Menü
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    mobileMenu.querySelectorAll('a').forEach(a =>
+        a.addEventListener('click', () => mobileMenu.classList.remove('open'))
+    );
+
+    // Scroll-Animationen
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Fortschrittsbalken animieren
+    const barObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bar = entry.target;
+                bar.style.width = '0%';
+                bar.style.transition = 'width 1.2s ease';
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => bar.style.width = bar.dataset.width);
+                });
+                barObserver.unobserve(bar);
+            }
+        });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('.progress').forEach(el => barObserver.observe(el));
+
+    // Zähler-Animation
+    const countObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const target = parseInt(el.dataset.count, 10);
+                const duration = 1200;
+                const start = performance.now();
+                function tick(now) {
+                    const p = Math.min((now - start) / duration, 1);
+                    el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+                    if (p < 1) requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(tick);
+                countObserver.unobserve(el);
+            }
+        });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
+
+    // Tabellenfilter und Suche
+    const searchInput = document.getElementById('tableSearch');
+    const filterSelect = document.getElementById('tableFilter');
+    const rows = document.querySelectorAll('#exampleTable tr');
+    const noResults = document.getElementById('noResults');
+
+    function filterTable() {
+        const q = searchInput.value.trim().toLowerCase();
+        const cat = filterSelect.value;
+        let visibleCount = 0;
+        rows.forEach(row => {
+            const matchesText = row.textContent.toLowerCase().includes(q);
+            const matchesCat = !cat || row.dataset.cat === cat;
+            const show = matchesText && matchesCat;
+            row.style.display = show ? '' : 'none';
+            if (show) visibleCount++;
+        });
+        noResults.classList.toggle('hidden', visibleCount > 0);
+    }
+    searchInput.addEventListener('input', filterTable);
+    filterSelect.addEventListener('change', filterTable);
+
+    // Aktiven Navigationslink hervorheben
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+                });
+            }
+        });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(s => sectionObserver.observe(s));
+</script>
+
+</body>
+</html>
